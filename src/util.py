@@ -1,6 +1,13 @@
 import pprint
 import math
 from statistics import mean
+import ntpath
+
+
+def path_leaf(path):
+    """An OS agnostic function to extract the filename from a provided path"""
+    head, tail = ntpath.split(path)
+    return tail or ntpath.basename(head)
 
 
 def pretty_print(dictionary):
