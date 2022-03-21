@@ -160,9 +160,7 @@ def get_KIT_features_F4(data):
     return feature_dictionary
 
 
-# TODO: We can further optimize the speed by using an enum to branch off which flight time calculations we wish to do
-
-
+# TODO: We can further optimize the speed by using an enum to branch off which flight time calculations we wish to do likely using an enum
 def get_all_users_features_KIT(directory, profile_path=None):
     users_feat_dict_f1 = {}
     users_feat_dict_f2 = {}
@@ -182,9 +180,8 @@ def get_all_users_features_KIT(directory, profile_path=None):
             data = df.values
             features = get_KIT_features_F1(data)
             print("Running against profile: %s" % directory + user_file)
-            kit_k, kit_v = count_matches(user_feat_dict_f1, features)
-            print("Found", kit_k, "Flight 1 KIT key matches")
-            print("Found", kit_v, "Flight 1 KIT value matches")
+            kit_v = count_matches(user_feat_dict_f1, features)
+            print("Found", kit_v, "Flight 1 time matches")
 
         users_feat_dict_f1[i + 1] = user_feat_dict_f1
 
