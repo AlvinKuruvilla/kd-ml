@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
+import numpy as np
+import scipy.stats as stats
 
 
 def make_line_graph(data: dict):

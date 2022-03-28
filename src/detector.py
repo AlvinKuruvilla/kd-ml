@@ -5,7 +5,7 @@ import sys
 from kht import get_all_users_features_KHT, get_all_users_features_KHT_from_file
 from kit import get_all_users_features_KIT
 from util import count_matches, pretty_print, list_avg
-from plotter import make_line_graph
+from plotter import make_line_graph, make_gaussian_distribution
 
 if __name__ == "__main__":
     dir_name = "data"
@@ -44,4 +44,5 @@ if __name__ == "__main__":
     # for i in range(len(KIT_keys)):
     #     processed_KIT[KIT_keys[i]] = list_avg(KIT_values[i])
     pretty_print(processed_KIT)
-    make_line_graph(processed_KIT)
+    # make_line_graph(processed_KIT)
+    make_gaussian_distribution(processed_KIT, "Key", "KIT")

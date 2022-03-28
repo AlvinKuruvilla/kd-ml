@@ -5,14 +5,15 @@
 # https://opensource.org/licenses/MIT.
 
 import os
-from verifiers.similarity_verifier import SimilarityVerifier
+from parsers.km_parser import KM_Parser
 
 
-def test_get_template():
-    pass
+def test_get_bbmas_dir():
+    parser = KM_Parser()
+    assert parser.get_bbmas_dir() == os.path.join(os.getcwd(), "gen", "km")
 
 
-def test_get_verification():
+def test_get_bbmas_dir_with_param():
     pass
 
 
