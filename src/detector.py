@@ -1,12 +1,8 @@
-from tqdm import tqdm
 import os
-import sys
 import matplotlib.pyplot as plt
 
-from kht import get_all_users_features_KHT, get_all_users_features_KHT_from_file
-from kit import get_all_users_features_KIT
-from util import count_matches, pretty_print, list_avg
-from plotter import make_line_graph, make_kde
+from kit import get_KIT_features_F1_from_file
+from util import pretty_print, list_avg
 import seaborn as sns
 import numpy as np
 
@@ -14,41 +10,32 @@ if __name__ == "__main__":
     dir_name = "data"
     dir_path = os.path.join(os.getcwd(), dir_name)
     selected_profile_path = os.path.join(dir_path, "Desktop/", "User105.csv")
-    # The KHT version
+    alternative_profile_path = os.path.join(dir_path, "Desktop/", "User106.csv")
 
-    # selected_profile_KHT_dictionary = get_all_users_features_KHT_from_file(
-    #     selected_profile_path
-    # )
-    user_files = os.listdir(os.path.join(dir_path, "Desktop/"))
-    # # pretty_print(get_all_users_features_KHT(user_files))
-    # # pretty_print(get_all_users_features_KIT(user_files)[0])
-    for i in tqdm(range(len(user_files))):
-        user_file = user_files[i]
-        # current_KHT_dict = get_all_users_features_KHT_from_file(
-        #     os.path.join(dir_path, "Desktop/", user_files[i])
-        # )
-        #     print("Running against profile: %s" % user_file)
-        # k, v = count_matches(selected_profile_KHT_dictionary, current_KHT_dict)
-        #     print("Found", k, "key matches")
-        #     print("Found", v, "value matches")
-        # make_histogram(current_KHT_dict)
     # The KIT version
-    profiles = get_all_users_features_KIT(
-        os.path.join(dir_path, "Desktop/"), selected_profile_path
+    selected_profile_KIT_dictionary = get_KIT_features_F1_from_file(
+        selected_profile_path
     )
-    processed_KIT = {}
-    current_KIT = profiles[0]
-    KIT_values = list(current_KIT.values())
-    KIT_keys = list(current_KIT.keys())
-    for i in KIT_values:
-        vals = dict(i)
-        for k, v in vals.items():
-            processed_KIT[k] = list_avg(v)
-    # for i in range(len(KIT_keys)):
-    #     processed_KIT[KIT_keys[i]] = list_avg(KIT_values[i])
-    pretty_print(processed_KIT)
-    # make_line_graph(processed_KIT)
-    data = list(processed_KIT.values())
+    alt_profile_KIT_dictionary = get_KIT_features_F1_from_file(alternative_profile_path)
+    selected_profile_data = list(selected_profile_KIT_dictionary.values())
+    alt_profile_data = list(alt_profile_KIT_dictionary.values())
+    processed_selected_profile_data = []
+    processed_alt_data = []
+    for dataset in selected_profile_data:
+        processed_selected_profile_data.append(list_avg(dataset))
+    for alt_dataset in alt_profile_data:
+        processed_alt_data.append(list_avg(alt_dataset))
+    # TODO: Try using scipy gaussian_kde() instead of seaborn. Refrence: https://stackoverflow.com/questions/62375034/find-non-overlapping-area-between-two-kde-plots-in-python
     sns.set_style("whitegrid")
-    plot = sns.kdeplot(np.array(data), bw=0.5)
+    sns.kdeplot(
+        np.array(processed_alt_data), bw_method=0.5, fill=True, legend=True, shade=1
+    )
+    sns.kdeplot(
+        np.array(processed_selected_profile_data),
+        bw_method=0.5,
+        fill=True,
+        legend=True,
+        shade=1,
+    )
+    plt.legend(labels=["105", "106"])
     plt.show()

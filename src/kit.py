@@ -180,8 +180,8 @@ def get_all_users_features_KIT(directory, profile_path=None):
             data = df.values
             features = get_KIT_features_F1(data)
             print("Running against profile: %s" % directory + user_file)
-            kit_v = count_matches(user_feat_dict_f1, features)
-            print("Found", kit_v, "Flight 1 time matches")
+            # kit_v = count_matches(user_feat_dict_f1, features)
+            # print("Found", kit_v, "Flight 1 time matches")
 
         users_feat_dict_f1[i + 1] = user_feat_dict_f1
 
@@ -200,3 +200,12 @@ def get_all_users_features_KIT(directory, profile_path=None):
         users_feat_dict_f3,
         users_feat_dict_f4,
     )
+
+
+def get_KIT_features_F1_from_file(profile_path):
+    features = {}
+    df = pd.read_csv(profile_path)
+    data_frame = get_dataframe_KIT(df.values)
+    user_data = data_frame.values
+    features = get_KIT_features_F1(user_data)
+    return features
