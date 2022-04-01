@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 from kit import get_KIT_features_F1_from_file
 from util import pretty_print, list_avg
+from plotter import plot_kde_overlap
 import seaborn as sns
 import numpy as np
 
@@ -38,4 +39,11 @@ if __name__ == "__main__":
         shade=1,
     )
     plt.legend(labels=["105", "106"])
+
     plt.show()
+    plot_kde_overlap(
+        np.array(processed_alt_data),
+        np.array(processed_selected_profile_data),
+        "105",
+        "106",
+    )
