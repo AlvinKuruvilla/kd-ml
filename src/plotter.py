@@ -100,44 +100,104 @@ def calculate_kde_overlap(x, y):
     return inters_x
 
 
-def plot_Epanechnikov(data):
-    # FIXME: What does the parameter to the evaluate() function do?
+def plot_Epanechnikov(data, label=None):
+    # FIXME: What does the parameter to the evaluate() function do? From the docs it looks like evaluate() puts the graph on a
+    # mesh of equidistant points. But sicne right now the graphs look almost identical it's hard to tell how we can use this
+    # if at all
     x, y = FFTKDE(bw=1, kernel="epa").fit(data, weights=None).evaluate(2**8)
-    plt.plot(x, y)
+    plt.plot(x, y, label=label)
+    plt.legend()
     plt.tight_layout()
-    plt.show()
 
 
-def plot_Triangular(data):
+def plot_Triangular(data, label=None):
+    # FIXME: What does the parameter to the evaluate() function do?
     x, y = FFTKDE(bw=1, kernel="tri").fit(data, weights=None).evaluate(2**8)
-    plt.plot(x, y)
+    plt.plot(x, y, label=label)
     plt.tight_layout()
-    plt.show()
 
 
-def plot_Biweight(data):
+def plot_Biweight(data, label=None):
+    # FIXME: What does the parameter to the evaluate() function do?
     x, y = FFTKDE(bw=1, kernel="biweight").fit(data, weights=None).evaluate(2**8)
-    plt.plot(x, y)
+    plt.plot(x, y, label=label)
     plt.tight_layout()
-    plt.show()
 
 
-def plot_Tricube(data):
+def plot_Tricube(data, label=None):
+    # FIXME: What does the parameter to the evaluate() function do?
     x, y = FFTKDE(bw=1, kernel="tricube").fit(data, weights=None).evaluate(2**8)
-    plt.plot(x, y)
+    plt.plot(x, y, label=label)
     plt.tight_layout()
-    plt.show()
 
 
-def plot_Triweight(data):
+def plot_Triweight(data, label=None):
     x, y = FFTKDE(bw=1, kernel="triweight").fit(data, weights=None).evaluate(2**8)
-    plt.plot(x, y)
+    plt.plot(x, y, label=label)
     plt.tight_layout()
+
+
+def plot_Cosine(data, label=None):
+    x, y = FFTKDE(bw=1, kernel="cosine").fit(data, weights=None).evaluate(2**8)
+    plt.plot(x, y, label=label)
+    plt.tight_layout()
+
+
+def plot_Epanechnikov_equation_overlap(
+    dataset1, dataset2, dataset1_label, dataset2_label, title="Epanechnikov overlap"
+):
+    plot_Epanechnikov(dataset1, dataset1_label)
+    plot_Epanechnikov(dataset2, dataset2_label)
+    plt.title(title)
+    plt.legend(labels=["105", "106"])
     plt.show()
 
 
-def plot_Cosine(data):
-    x, y = FFTKDE(bw=1, kernel="cosine").fit(data, weights=None).evaluate(2**8)
-    plt.plot(x, y)
-    plt.tight_layout()
+def plot_Triangular_equation_overlap(
+    dataset1, dataset2, dataset1_label, dataset2_label, title="Triangular overlap"
+):
+    plot_Triangular(dataset1, dataset1_label)
+    plot_Triangular(dataset2, dataset2_label)
+    plt.title(title)
+    plt.legend(labels=["105", "106"])
+    plt.show()
+
+
+def plot_Biweight_equation_overlap(
+    dataset1, dataset2, dataset1_label, dataset2_label, title="Biweight overlap"
+):
+    plot_Biweight(dataset1, dataset1_label)
+    plot_Biweight(dataset2, dataset2_label)
+    plt.title(title)
+    plt.legend(labels=["105", "106"])
+    plt.show()
+
+
+def plot_Tricube_equation_overlap(
+    dataset1, dataset2, dataset1_label, dataset2_label, title="Tricube overlap"
+):
+    plot_Tricube(dataset1, dataset1_label)
+    plot_Tricube(dataset2, dataset2_label)
+    plt.title(title)
+    plt.legend(labels=["105", "106"])
+    plt.show()
+
+
+def plot_Triweight_equation_overlap(
+    dataset1, dataset2, dataset1_label, dataset2_label, title="Triweight overlap"
+):
+    plot_Triweight(dataset1, dataset1_label)
+    plot_Triweight(dataset2, dataset2_label)
+    plt.title(title)
+    plt.legend(labels=["105", "106"])
+    plt.show()
+
+
+def plot_Cosine_equation_overlap(
+    dataset1, dataset2, dataset1_label, dataset2_label, title="Cosine overlap"
+):
+    plot_Cosine(dataset1, dataset1_label)
+    plot_Cosine(dataset2, dataset2_label)
+    plt.title(title)
+    plt.legend(labels=["105", "106"])
     plt.show()

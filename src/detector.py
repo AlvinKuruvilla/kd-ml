@@ -26,14 +26,18 @@ if __name__ == "__main__":
     for alt_dataset in alt_profile_data:
         processed_alt_data.append(list_avg(alt_dataset))
 
-    plt.legend(labels=["105", "106"])
-    plot_kde_overlap(
-        np.array(processed_alt_data),
-        np.array(processed_selected_profile_data),
-        "105",
-        "106",
-    )
+    # plot_kde_overlap(
+    #     np.array(processed_alt_data),
+    #     np.array(processed_selected_profile_data),
+    #     "105",
+    #     "106",
+    # )
     # plot_Epanechnikov(np.array(processed_selected_profile_data))
     # plot_Epanechnikov(np.array(processed_alt_data))
     # FIXME: All the other plots except gaussian so far look the same
-    plot_Epanechnikov(np.array(processed_selected_profile_data))
+    plot_Biweight_equation_overlap(
+        np.array(processed_selected_profile_data),
+        np.array(processed_alt_data),
+        "105",
+        "106",
+    )
