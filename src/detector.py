@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 
 from kit import get_KIT_features_F1_from_file
 from util import pretty_print, list_avg
-from plotter import plot_kde_overlap
-import seaborn as sns
+from plotter import *
 import numpy as np
 
 if __name__ == "__main__":
@@ -26,24 +25,15 @@ if __name__ == "__main__":
         processed_selected_profile_data.append(list_avg(dataset))
     for alt_dataset in alt_profile_data:
         processed_alt_data.append(list_avg(alt_dataset))
-    # TODO: Try using scipy gaussian_kde() instead of seaborn. Refrence: https://stackoverflow.com/questions/62375034/find-non-overlapping-area-between-two-kde-plots-in-python
-    sns.set_style("whitegrid")
-    sns.kdeplot(
-        np.array(processed_alt_data), bw_method=0.5, fill=True, legend=True, shade=1
-    )
-    sns.kdeplot(
-        np.array(processed_selected_profile_data),
-        bw_method=0.5,
-        fill=True,
-        legend=True,
-        shade=1,
-    )
-    plt.legend(labels=["105", "106"])
 
-    plt.show()
+    plt.legend(labels=["105", "106"])
     plot_kde_overlap(
         np.array(processed_alt_data),
         np.array(processed_selected_profile_data),
         "105",
         "106",
     )
+    # plot_Epanechnikov(np.array(processed_selected_profile_data))
+    # plot_Epanechnikov(np.array(processed_alt_data))
+    # FIXME: All the other plots except gaussian so far look the same
+    plot_Epanechnikov(np.array(processed_selected_profile_data))

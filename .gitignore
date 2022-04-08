@@ -2,3 +2,4 @@ src/__pycache__
 Test/__pycache__
 src/parsers/__pycache__/
 perf
+env

@@ -1,8 +1,22 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import numpy as np
-import pandas as pd
+from enum import Enum
 from scipy.stats import gaussian_kde
+from KDEpy import FFTKDE
+import seaborn as sns
+
+
+class KDE_Type(Enum):
+    Guassian = 1
+    Epanechnikov = 2
+    Unifrm = 3  # FIXME: Unimplemented
+    Triangular = 4
+    Biweight = 5
+    Triweight = 6
+    Cosine = 7
+    Cosine2 = 8  # FIXME: Unimplemented
+    Tricube = 9
 
 
 def make_line_plot(data: dict):
@@ -14,6 +28,20 @@ def make_line_plot(data: dict):
 
     plt.plot(x, y)
     plt.show()
+
+
+def basic_kde(processed_selected_profile_data, processed_alt_data):
+    sns.set_style("whitegrid")
+    sns.kdeplot(
+        np.array(processed_alt_data), bw_method=0.5, fill=True, legend=True, shade=1
+    )
+    sns.kdeplot(
+        np.array(processed_selected_profile_data),
+        bw_method=0.5,
+        fill=True,
+        legend=True,
+        shade=1,
+    )
 
 
 def plot_kde_overlap(x, y, xlabel, ylabel):
@@ -70,3 +98,46 @@ def calculate_kde_overlap(x, y):
     kde1_x = kde1(x)
     inters_x = np.minimum(kde0_x, kde1_x)
     return inters_x
+
+
+def plot_Epanechnikov(data):
+    # FIXME: What does the parameter to the evaluate() function do?
+    x, y = FFTKDE(bw=1, kernel="epa").fit(data, weights=None).evaluate(2**8)
+    plt.plot(x, y)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_Triangular(data):
+    x, y = FFTKDE(bw=1, kernel="tri").fit(data, weights=None).evaluate(2**8)
+    plt.plot(x, y)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_Biweight(data):
+    x, y = FFTKDE(bw=1, kernel="biweight").fit(data, weights=None).evaluate(2**8)
+    plt.plot(x, y)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_Tricube(data):
+    x, y = FFTKDE(bw=1, kernel="tricube").fit(data, weights=None).evaluate(2**8)
+    plt.plot(x, y)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_Triweight(data):
+    x, y = FFTKDE(bw=1, kernel="triweight").fit(data, weights=None).evaluate(2**8)
+    plt.plot(x, y)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_Cosine(data):
+    x, y = FFTKDE(bw=1, kernel="cosine").fit(data, weights=None).evaluate(2**8)
+    plt.plot(x, y)
+    plt.tight_layout()
+    plt.show()
